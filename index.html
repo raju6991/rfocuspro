@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomofocus Clone</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">✔ RFocus Pro</div>
+      <div class="top-buttons">
+        <button>📊 Report</button>
+        <button>⚙️ Setting</button>
+        <button>🔐 Sign In</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="timer-box">
+        <div class="tabs">
+          <button class="tab active" data-mode="pomodoro">Pomodoro</button>
+          <button class="tab" data-mode="short">Short Break</button>
+          <button class="tab" data-mode="long">Long Break</button>
+        </div>
+        <div class="timer-display">25:00</div>
+        <button class="start-btn">START</button>
+        <div class="message">#1<br />Time to focus!</div>
+      </section>
+
+      <section class="tasks">
+        <h2>Tasks</h2>
+        <div class="task-box">
+          <button class="add-task">Add Task</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="./js/main.js"></script>
+  </body>
+</html>

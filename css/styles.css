@@ -1,5 +1,5 @@
 :root {
-  --main-bg: hsl(229, 89%, 54%);
+  --main-bg: #4a47e5;
   --box-bg: #3e3cd7;
   --text-color: #fff;
   --accent-color: #fff;
@@ -12,6 +12,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: all 0.3s ease;
 }
 
 body {
@@ -36,6 +37,7 @@ header {
 .logo {
   font-weight: bold;
   font-size: 1.3rem;
+  text-align: center;
 }
 
 .top-buttons button {
@@ -45,7 +47,13 @@ header {
   padding: 8px 12px;
   color: var(--text-color);
   border-radius: 5px;
-  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.top-buttons button:hover {
+  background: #314bbe;
+  transform: scale(1.05);
 }
 
 main {
@@ -76,10 +84,17 @@ main {
   padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
+  transform: translateY(0);
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .tabs .active {
   background: rgba(255, 255, 255, 0.2);
+}
+
+.tabs button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .timer-display {
@@ -94,13 +109,26 @@ main {
   color: var(--button-text);
   border: none;
   border-radius: 5px;
+  transform: scale(1);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+  background: var(--button-bg);
+  opacity: 0.9;
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 20px;
 }
 
+.start-btn:hover {
+  background: #1a2f9e;
+}
+
 .message {
-  font-size: 1rem;
+  font-size: 1.3rem;
   opacity: 0.8;
 }
 
@@ -109,6 +137,7 @@ main {
 }
 
 .tasks h2 {
+  font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
@@ -118,11 +147,10 @@ main {
   border-radius: 10px;
   text-align: center;
 }
-
 .add-task {
   background: none;
   border: none;
   color: var(--text-color);
-  font-size: 1rem;
+  font-size: 1.3rem;
   cursor: pointer;
 }

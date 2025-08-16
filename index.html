@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pomofocus Clone</title>
     <link rel="stylesheet" href="./css/styles.css" />
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
   </head>
   <body>
     <header>
@@ -36,6 +37,24 @@
       </section>
     </main>
 
+    <div class="music-player">
+      <div class="music-info">
+        <span class="song-title">Loading...</span>
+      </div>
+      <div class="controls">
+        <button class="prev-btn">⏮️</button>
+        <button class="play-btn">▶️</button>
+        <button class="next-btn">⏭️</button>
+        <input
+          type="range"
+          class="volume-slider"
+          min="0"
+          max="100"
+          value="50"
+        />
+        <span class="volume-icon">🔊</span>
+      </div>
+    </div>
     <script src="./js/main.js"></script>
   </body>
 </html>

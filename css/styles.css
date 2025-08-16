@@ -154,3 +154,63 @@ main {
   font-size: 1.3rem;
   cursor: pointer;
 }
+
+.music-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  width: 300px;
+}
+
+.music-info {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.song-title {
+  color: white;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.controls button:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  margin: 0 10px;
+}
+
+.volume-icon {
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}

@@ -1676,9 +1676,9 @@ main {
   margin: 0 auto;
 }
 
-/* Fix chart container placeholder */
+/* Fix chart container */
 .chart-container {
-  min-height: 200px;
+  min-height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1686,8 +1686,10 @@ main {
   font-style: italic;
 }
 
-.chart-container::before {
-  content: "📊 Productivity chart will appear here";
+#productivity-chart {
+  max-width: 100%;
+  height: auto;
+  background: transparent;
 }
 
 /* Ensure proper spacing for sections */

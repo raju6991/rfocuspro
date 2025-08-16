@@ -2,8 +2,6 @@
 
 A beautiful, feature-rich Pomodoro timer application with task management, goal tracking, and productivity analytics. Built with vanilla JavaScript, HTML, and CSS for optimal performance and compatibility.
 
-![RFocus Pro Screenshot](https://via.placeholder.com/800x400/4a47e5/ffffff?text=RFocus+Pro+Pomodoro+Timer)
-
 ## ✨ Features
 
 ### 🎯 **Core Pomodoro Timer**
@@ -69,7 +67,7 @@ A beautiful, feature-rich Pomodoro timer application with task management, goal 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/rfocus-pro.git
+   git clone https://github.com/raju6991/rfocuspro
    cd rfocus-pro
    ```
 
@@ -78,8 +76,6 @@ A beautiful, feature-rich Pomodoro timer application with task management, goal 
    ```bash
    # Simply open index.html in your browser
    open index.html
-   # or
-   python -m http.server 8000  # For local development server
    ```
 
 3. **Start being productive!**
@@ -130,11 +126,10 @@ A beautiful, feature-rich Pomodoro timer application with task management, goal 
 rfocus-pro/
 ├── index.html              # Main HTML structure
 ├── css/
-│   └── styles.css          # All styling and animations
+│   └── styles.css         # All styling and animations
 ├── js/
 │   └── main.js            # Complete application logic
-├── .kiro/
-│   └── specs/             # Development specifications
+|── specs/                 # Development specifications
 └── README.md              # This file
 ```
 
@@ -194,19 +189,6 @@ notificationManager.showToast({
   duration: 3000,
   particles: true,
 });
-```
-
-## 🔧 Development
-
-### Local Development
-
-```bash
-# Start local server
-python -m http.server 8000
-# or
-npx serve .
-# or
-php -S localhost:8000
 ```
 
 ### Browser Compatibility
@@ -270,18 +252,6 @@ console.log(window.goalTracker.getActiveGoals());
 console.log(window.statistics.getTodayStats());
 ```
 
-## 🤝 Contributing
-
-We welcome contributions! Here's how to get started:
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes**: Follow the existing code style
-4. **Test thoroughly**: Ensure all features work correctly
-5. **Commit changes**: `git commit -m 'Add amazing feature'`
-6. **Push to branch**: `git push origin feature/amazing-feature`
-7. **Open a Pull Request**: Describe your changes clearly
-
 ### Development Guidelines
 
 - Use vanilla JavaScript (no frameworks)
@@ -290,28 +260,9 @@ We welcome contributions! Here's how to get started:
 - Test on multiple browsers
 - Ensure mobile compatibility
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - **Pomodoro Technique**: Created by Francesco Cirillo
 - **Web Audio API**: For beautiful notification sounds
 - **CSS Animations**: For smooth and engaging user experience
 - **Local Storage API**: For persistent data storage
-
-## 📞 Support
-
-Having issues or questions?
-
-- 📧 **Email**: support@rfocuspro.com
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/yourusername/rfocus-pro/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/yourusername/rfocus-pro/discussions)
-- 📖 **Documentation**: [Wiki](https://github.com/yourusername/rfocus-pro/wiki)
-
----
-
-**Made with ❤️ for productivity enthusiasts**
-
-_Stay focused, stay productive, stay awesome!_ 🚀

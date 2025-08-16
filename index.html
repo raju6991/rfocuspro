@@ -7,34 +7,375 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
+    <!-- Loading indicator -->
+    <div
+      id="loading-indicator"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #4a47e5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+      "
+    >
+      <div style="font-size: 3rem; margin-bottom: 20px">🍅</div>
+      <h1>RFocus Pro</h1>
+      <p>Loading your productivity workspace...</p>
+      <div
+        style="
+          width: 200px;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 2px;
+          margin-top: 20px;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 2px;
+            animation: loading-bar 2s ease-in-out infinite;
+          "
+        ></div>
+      </div>
+    </div>
+
     <header>
       <div class="logo">✔ RFocus Pro</div>
-      <div class="top-buttons">
-        <button>📊 All Tasks</button>
-        <button>🎯 Target Goals</button>
-        <button>🔐 Sign In</button>
-      </div>
+      <nav class="main-nav">
+        <button class="nav-btn active" data-page="timer">🍅 Timer</button>
+        <button class="nav-btn" data-page="goals">🎯 Goals & Stats</button>
+        <button class="nav-btn" data-page="settings">⚙️ Settings</button>
+      </nav>
     </header>
 
     <main>
-      <section class="timer-box">
-        <div class="tabs">
-          <button class="tab active" data-mode="pomodoro">Pomodoro</button>
-          <button class="tab" data-mode="short">Short Break</button>
-          <button class="tab" data-mode="long">Long Break</button>
-        </div>
-        <div class="timer-display">25:00</div>
-        <button class="start-btn">START</button>
-        <div class="message">#1<br />Time to focus!</div>
-      </section>
+      <!-- Timer Page -->
+      <div class="page" id="timer-page">
+        <section class="timer-box">
+          <div class="tabs">
+            <button class="tab active" data-mode="pomodoro">Pomodoro</button>
+            <button class="tab" data-mode="short">Short Break</button>
+            <button class="tab" data-mode="long">Long Break</button>
+          </div>
+          <div class="timer-display">25:00</div>
+          <button class="start-btn">START</button>
+          <div class="message">#1<br />Time to focus!</div>
+        </section>
 
-      <section class="tasks">
-        <h2>Tasks</h2>
-        <div class="task-box">
-          <button class="add-task">Add Task</button>
-        </div>
-      </section>
+        <section class="tasks">
+          <div class="tasks-header">
+            <h2>Tasks</h2>
+            <div class="task-controls">
+              <select id="task-filter" class="task-filter">
+                <option value="all">All Tasks</option>
+                <option value="active">Active</option>
+                <option value="completed">Completed</option>
+              </select>
+              <select id="task-sort" class="task-sort">
+                <option value="createdAt">Newest First</option>
+                <option value="priority">Priority</option>
+                <option value="progress">Progress</option>
+                <option value="title">Alphabetical</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="current-task" id="current-task" style="display: none">
+            <div class="current-task-header">
+              <span class="current-task-label">Current Task:</span>
+              <button class="clear-current-task" id="clear-current-task">
+                ×
+              </button>
+            </div>
+            <div class="current-task-info">
+              <div class="current-task-title" id="current-task-title"></div>
+              <div
+                class="current-task-progress"
+                id="current-task-progress"
+              ></div>
+            </div>
+          </div>
+
+          <div class="task-list" id="task-list">
+            <!-- Tasks will be dynamically inserted here -->
+          </div>
+
+          <div class="add-task-section">
+            <button class="add-task-btn" id="add-task-btn">+ Add Task</button>
+
+            <div class="add-task-form" id="add-task-form" style="display: none">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="task-title"
+                  placeholder="Task title"
+                  maxlength="100"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <textarea
+                  id="task-description"
+                  placeholder="Description (optional)"
+                  rows="2"
+                ></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="task-pomodoros">Estimated Pomodoros:</label>
+                  <input
+                    type="number"
+                    id="task-pomodoros"
+                    min="1"
+                    max="20"
+                    value="1"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="task-category">Category:</label>
+                  <select id="task-category">
+                    <option value="general">General</option>
+                    <option value="work">Work</option>
+                    <option value="personal">Personal</option>
+                    <option value="learning">Learning</option>
+                    <option value="health">Health</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="task-priority">Priority:</label>
+                  <select id="task-priority">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn-cancel" id="cancel-task">
+                  Cancel
+                </button>
+                <button type="button" class="btn-save" id="save-task">
+                  Save Task
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Goals & Statistics Page -->
+      <div class="page" id="goals-page" style="display: none">
+        <!-- Today's Overview -->
+        <section class="overview-section">
+          <h2>Today's Overview</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">🍅</div>
+              <div class="stat-content">
+                <div class="stat-number" id="today-pomodoros">0</div>
+                <div class="stat-label">Pomodoros</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-content">
+                <div class="stat-number" id="today-tasks">0</div>
+                <div class="stat-label">Tasks Completed</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⏱️</div>
+              <div class="stat-content">
+                <div class="stat-number" id="today-focus-time">0h 0m</div>
+                <div class="stat-label">Focus Time</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🔥</div>
+              <div class="stat-content">
+                <div class="stat-number" id="current-streak">0</div>
+                <div class="stat-label">Day Streak</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section class="goals-section">
+          <div class="section-header">
+            <h2>Goals</h2>
+            <button class="add-goal-btn" id="add-goal-btn">+ Add Goal</button>
+          </div>
+
+          <div class="goals-list" id="goals-list">
+            <!-- Goals will be dynamically inserted here -->
+          </div>
+
+          <div class="add-goal-form" id="add-goal-form" style="display: none">
+            <h3>Create New Goal</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="goal-type">Goal Type:</label>
+                <select id="goal-type">
+                  <option value="pomodoros">Daily Pomodoros</option>
+                  <option value="tasks">Daily Tasks</option>
+                  <option value="focusTime">Daily Focus Time</option>
+                  <option value="streak">Streak Days</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="goal-target">Target:</label>
+                <input type="number" id="goal-target" min="1" value="8" />
+              </div>
+              <div class="form-group">
+                <label for="goal-period">Period:</label>
+                <select id="goal-period">
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="goal-description">Description (optional):</label>
+              <input
+                type="text"
+                id="goal-description"
+                placeholder="e.g., Complete 8 pomodoros every day"
+              />
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-cancel" id="cancel-goal">
+                Cancel
+              </button>
+              <button type="button" class="btn-save" id="save-goal">
+                Save Goal
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="statistics-section">
+          <h2>Statistics</h2>
+          <div class="stats-tabs">
+            <button class="stats-tab active" data-period="week">
+              This Week
+            </button>
+            <button class="stats-tab" data-period="month">This Month</button>
+            <button class="stats-tab" data-period="year">This Year</button>
+          </div>
+
+          <div class="chart-container">
+            <canvas id="productivity-chart" width="400" height="200"></canvas>
+          </div>
+
+          <div class="detailed-stats" id="detailed-stats">
+            <!-- Detailed statistics will be inserted here -->
+          </div>
+        </section>
+      </div>
+
+      <!-- Settings Page -->
+      <div class="page" id="settings-page" style="display: none">
+        <section class="settings-section">
+          <h2>Settings</h2>
+          <div class="settings-grid">
+            <div class="setting-group">
+              <h3>Timer Settings</h3>
+              <div class="setting-item">
+                <label for="work-duration">Work Duration (minutes):</label>
+                <input
+                  type="number"
+                  id="work-duration"
+                  min="1"
+                  max="60"
+                  value="25"
+                />
+              </div>
+              <div class="setting-item">
+                <label for="short-break-duration">Short Break (minutes):</label>
+                <input
+                  type="number"
+                  id="short-break-duration"
+                  min="1"
+                  max="30"
+                  value="5"
+                />
+              </div>
+              <div class="setting-item">
+                <label for="long-break-duration">Long Break (minutes):</label>
+                <input
+                  type="number"
+                  id="long-break-duration"
+                  min="1"
+                  max="60"
+                  value="15"
+                />
+              </div>
+            </div>
+
+            <div class="setting-group">
+              <h3>Notifications</h3>
+              <div class="setting-item">
+                <label>
+                  <input type="checkbox" id="sound-enabled" checked />
+                  Enable Sound Notifications
+                </label>
+              </div>
+              <div class="setting-item">
+                <label for="notification-volume">Volume:</label>
+                <input
+                  type="range"
+                  id="notification-volume"
+                  min="0"
+                  max="100"
+                  value="50"
+                />
+              </div>
+            </div>
+
+            <div class="setting-group">
+              <h3>Automation</h3>
+              <div class="setting-item">
+                <label>
+                  <input type="checkbox" id="auto-start-breaks" checked />
+                  Auto-start Breaks
+                </label>
+              </div>
+              <div class="setting-item">
+                <label>
+                  <input type="checkbox" id="auto-start-work" checked />
+                  Auto-start Work Sessions
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-actions">
+            <button class="btn-save" id="save-settings">Save Settings</button>
+            <button class="btn-cancel" id="reset-settings">
+              Reset to Defaults
+            </button>
+          </div>
+        </section>
+      </div>
     </main>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
 
     <script src="./js/main.js"></script>
   </body>

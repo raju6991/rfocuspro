@@ -2619,6 +2619,21 @@ class GoalUI {
     this.updateOverview();
     this.renderGoals();
     this.updateDetailedStats("week");
+
+    // Ensure canvas is properly sized
+    setTimeout(() => {
+      const canvas = document.getElementById("productivity-chart");
+      if (canvas) {
+        // Set canvas size based on container
+        const container = canvas.parentElement;
+        const containerWidth = container.clientWidth - 40; // Account for padding
+        canvas.width = Math.min(containerWidth, 500);
+        canvas.height = 200;
+
+        // Redraw chart with new size
+        this.updateDetailedStats("week");
+      }
+    }, 100);
   }
 
   updateOverview() {
@@ -2868,6 +2883,108 @@ class GoalUI {
         <div class="detailed-stat-value">${this.getGoalsAchievedCount()}</div>
       </div>
     `;
+
+    // Update the chart
+    this.updateChart(weeklyStats.dailyBreakdown, period);
+  }
+
+  updateChart(dailyData, period) {
+    const canvas = document.getElementById("productivity-chart");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Chart configuration
+    const padding = 40;
+    const chartWidth = width - padding * 2;
+    const chartHeight = height - padding * 2;
+
+    // Prepare data
+    const days = Object.keys(dailyData);
+    const values = Object.values(dailyData);
+    const maxValue = Math.max(...values, 1);
+
+    // Set styles
+    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
+    ctx.font = '12px "Segoe UI", sans-serif';
+
+    // Draw grid lines
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+    ctx.lineWidth = 1;
+
+    // Horizontal grid lines
+    for (let i = 0; i <= 5; i++) {
+      const y = padding + (chartHeight / 5) * i;
+      ctx.beginPath();
+      ctx.moveTo(padding, y);
+      ctx.lineTo(width - padding, y);
+      ctx.stroke();
+
+      // Y-axis labels
+      const value = Math.round(maxValue - (maxValue / 5) * i);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+      ctx.textAlign = "right";
+      ctx.fillText(value.toString(), padding - 10, y + 4);
+    }
+
+    // Draw bars
+    const barWidth = (chartWidth / days.length) * 0.6;
+    const barSpacing = chartWidth / days.length;
+
+    days.forEach((day, index) => {
+      const value = values[index];
+      const barHeight = (value / maxValue) * chartHeight;
+      const x = padding + barSpacing * index + (barSpacing - barWidth) / 2;
+      const y = height - padding - barHeight;
+
+      // Draw bar
+      const gradient = ctx.createLinearGradient(0, y, 0, y + barHeight);
+      gradient.addColorStop(0, "#4ECDC4");
+      gradient.addColorStop(1, "#44A08D");
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(x, y, barWidth, barHeight);
+
+      // Draw bar border
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x, y, barWidth, barHeight);
+
+      // Draw day labels
+      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+      ctx.textAlign = "center";
+      ctx.fillText(day, x + barWidth / 2, height - padding + 20);
+
+      // Draw value labels on bars
+      if (value > 0) {
+        ctx.fillStyle = "white";
+        ctx.font = 'bold 11px "Segoe UI", sans-serif';
+        ctx.fillText(value.toString(), x + barWidth / 2, y - 5);
+        ctx.font = '12px "Segoe UI", sans-serif';
+      }
+    });
+
+    // Draw chart title
+    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    ctx.font = 'bold 14px "Segoe UI", sans-serif';
+    ctx.textAlign = "center";
+    ctx.fillText(
+      `${
+        period === "week"
+          ? "This Week"
+          : period === "month"
+          ? "This Month"
+          : "This Year"
+      } - Pomodoros Completed`,
+      width / 2,
+      25
+    );
   }
 
   getMostProductiveDay(dailyBreakdown) {
